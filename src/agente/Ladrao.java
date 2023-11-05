@@ -5,6 +5,8 @@ import algoritmo.ProgramaLadrao;
 import java.util.Arrays;
 
 public class Ladrao extends ProgramaLadrao {
+	int ultimaPos = 0;
+
 	public int heuristica(int codigo){ //Ladrão prefere explorar até encontrar o poupador -100 até 100
 		/*
 		  codigos:
@@ -19,7 +21,9 @@ public class Ladrao extends ProgramaLadrao {
 		   200 -> Ladrão
 		* */
 		switch (codigo) {
-			case -2, -1:
+			case -2:
+				return -100;
+			case -1:
 				return -50;
 			case 0:
 				return 30;
@@ -28,13 +32,13 @@ public class Ladrao extends ProgramaLadrao {
 			case 3:
 				return 40;
 			case 4:
-				return 20;
-			case 5:
 				return -20;
+			case 5:
+				return -30;
 			case 100, 110:
 				return 100;
 			case 200:
-				return 500;
+				return 90;
 		}
 		return 0;
 	}
@@ -258,7 +262,8 @@ public class Ladrao extends ProgramaLadrao {
 				Arrays.stream(sensor.getAmbienteOlfatoLadrao()).anyMatch(n -> {return n > 1;})
 		) {
 			return mover();
-		} else {
+		}
+		else {
 			return (int)((Math.random() * 100) % 4) + 1;
 		}
 //	return mover();
