@@ -22,9 +22,9 @@ public class Ladrao extends ProgramaLadrao {
 		* */
 		switch (codigo) {
 			case -2:
-				return -100;
-			case -1:
 				return -50;
+			case -1:
+				return -100;
 			case 0:
 				return 30;
 			case 1:
@@ -258,8 +258,8 @@ public class Ladrao extends ProgramaLadrao {
 		System.out.println(visaoBaixoEsquerda());
 
 		if(
-				Arrays.stream(sensor.getVisaoIdentificacao()).anyMatch(n -> {return n > 1;}) &&
-				Arrays.stream(sensor.getAmbienteOlfatoLadrao()).anyMatch(n -> {return n > 1;})
+				Arrays.stream(sensor.getVisaoIdentificacao()).anyMatch(n -> n > 1) &&
+				Arrays.stream(sensor.getAmbienteOlfatoLadrao()).anyMatch(n -> n > 1)
 		) {
 			return mover();
 		}
