@@ -5,8 +5,6 @@ import algoritmo.ProgramaLadrao;
 import java.util.Arrays;
 
 public class Ladrao extends ProgramaLadrao {
-	int ultimaPos = 0;
-
 	public int heuristica(int codigo){ //Ladrão prefere explorar até encontrar o poupador -100 até 100
 		/*
 		  codigos:
@@ -112,7 +110,7 @@ public class Ladrao extends ProgramaLadrao {
 			quadrante = 3;
 		}
 		if(maior < visaoBaixoEsquerda()) {
-			maior = visaoBaixoEsquerda();
+//			maior = visaoBaixoEsquerda();
 			quadrante = 4;
 		}
 		System.out.println(quadrante);
@@ -160,7 +158,6 @@ public class Ladrao extends ProgramaLadrao {
 			quadrante = 3;
 		}
 		if(maior < olfatoBaixoEsquerda()) {
-			maior = olfatoBaixoEsquerda();
 			quadrante = 4;
 		}
 		return quadrante;
