@@ -41,6 +41,24 @@ public class Ladrao extends ProgramaLadrao {
 		return 0;
 	}
 
+	public int heuristicaOlfato(int codigo) {
+		switch(codigo){
+		case 0:
+			return 0;
+		case 1:
+			return 35;
+		case 2:
+			return 34;
+		case 3:
+			return 33;
+		case 4:
+			return 32;
+		case 5:
+			return 31;
+		}
+	return 0;
+	}
+
 	public int visaoCimaEsquerda(){
 		int total = 0;
 		total += heuristica(sensor.getVisaoIdentificacao()[0])
@@ -167,35 +185,52 @@ public class Ladrao extends ProgramaLadrao {
 		int compararVisao = compararVisao();
 		int compararOlfato = compararOlfato();
 		int[] visaoId = sensor.getVisaoIdentificacao();
+		int[] olfatoId = sensor.getAmbienteOlfatoLadrao();
 
+		int olfato1 = ((heuristicaOlfato(olfatoId[0]) + heuristicaOlfato(olfatoId[1]) + heuristicaOlfato(olfatoId[2])) / 3); // 0 1 2
+		int olfato2 = ((heuristicaOlfato(olfatoId[0]) + heuristicaOlfato(olfatoId[1]) + heuristicaOlfato(olfatoId[3])) / 3); // 0 1 3
+		int olfato3 = ((heuristicaOlfato(olfatoId[0]) + heuristicaOlfato(olfatoId[3]) + heuristicaOlfato(olfatoId[5])) / 3); // 0 3 5
+		int olfato4 = ((heuristicaOlfato(olfatoId[3]) + heuristicaOlfato(olfatoId[5]) + heuristicaOlfato(olfatoId[6])) / 3); // 3 5 6
+		int olfato5 = ((heuristicaOlfato(olfatoId[5]) + heuristicaOlfato(olfatoId[6]) + heuristicaOlfato(olfatoId[7])) / 3); // 5 6 7
+		int olfato6 = ((heuristicaOlfato(olfatoId[4]) + heuristicaOlfato(olfatoId[7]) + heuristicaOlfato(olfatoId[6])) / 3); // 4 6 7
+		int olfato7 = ((heuristicaOlfato(olfatoId[2]) + heuristicaOlfato(olfatoId[4]) + heuristicaOlfato(olfatoId[7])) / 3); // 2 4 7
+
+		// 0 1 2 6 7
 		int visao1 = ((heuristica(visaoId[0]) + heuristica(visaoId[1]) +
 				heuristica(visaoId[2]) + heuristica(visaoId[6]) +
 				heuristica(visaoId[7])) / 5);
 
+		// 0 5 6 10 11
 		int visao2 = ((heuristica(visaoId[0]) +
 				heuristica(visaoId[5]) + heuristica(visaoId[6]) +
 				heuristica(visaoId[10]) + heuristica(visaoId[11])) / 5);
 
+		// 2 3 4 7 8
 		int visao3 = ((heuristica(visaoId[2]) + heuristica(visaoId[3]) +
 				heuristica(visaoId[4]) + heuristica(visaoId[7]) +
 				heuristica(visaoId[8])) / 5);
 
+		// 4 8 9 12 13
 		int visao4 = ((heuristica(visaoId[4]) +
 				heuristica(visaoId[8]) + heuristica(visaoId[9]) +
 				heuristica(visaoId[12]) + heuristica(visaoId[13])) / 5);
 
+		// 12 13 17 18 23
 		int visao5 = ((heuristica(visaoId[12]) + heuristica(visaoId[13]) +
 				heuristica(visaoId[17]) + heuristica(visaoId[18]) +
 				heuristica(visaoId[23])) / 5);
 
+		// 16 17 21 22 23
 		int visao6 = ((heuristica(visaoId[16]) +
 				heuristica(visaoId[17]) + heuristica(visaoId[21]) +
 				heuristica(visaoId[22]) + heuristica(visaoId[23])) / 5);
 
+		// 15 16 19 20 21
 		int visao7 = ((heuristica(visaoId[15]) + heuristica(visaoId[16]) +
 				heuristica(visaoId[19]) + heuristica(visaoId[20]) +
 				heuristica(visaoId[21])) / 5);
 
+		// 10 11 14 15 19
 		int visao8 = ((heuristica(visaoId[10]) +
 				heuristica(visaoId[11]) + heuristica(visaoId[14]) +
 				heuristica(visaoId[15]) + heuristica(visaoId[19])) / 5);
@@ -205,7 +240,15 @@ public class Ladrao extends ProgramaLadrao {
 				boolean decisao = ( visao1 > visao2 ||
 						(visaoId[11] == 1) || (visaoId[11] == 3) ||
 						(visaoId[11] == 4) || (visaoId[11] == 5));
-				if (decisao) {
+
+				boolean decisaoOlfato =
+						olfato1 > olfato2
+						&& olfato1 > olfato3
+						&& olfato1 > olfato4
+						&& olfato1 > olfato5
+						&& olfato1 > olfato6
+						&& olfato1 > olfato7;
+				if (decisao || decisaoOlfato) {
 					return 1;
 				}
 				return 4;
@@ -214,7 +257,15 @@ public class Ladrao extends ProgramaLadrao {
 				boolean decisao2 = (visao3 >  visao4) ||
 						(visaoId[12] == 1)|| (visaoId[12] == 3) ||
 						(visaoId[12] == 4) || (visaoId[12] == 5);
-				if (decisao2) {
+
+				boolean decisaoOlfato2 =
+								olfato2 > olfato1
+								&& olfato2 > olfato3
+								&& olfato2 > olfato4
+								&& olfato2 > olfato5
+								&& olfato2 > olfato6
+								&& olfato2 > olfato7;
+				if (decisao2 || decisaoOlfato2) {
 					return 1;
 				}
 				return 3;
@@ -223,7 +274,14 @@ public class Ladrao extends ProgramaLadrao {
 				boolean decisao3 = (visao5 >  visao6) ||
 						(visaoId[16] == 1)|| (visaoId[16] == 3) ||
 						(visaoId[16] == 4) || (visaoId[16] == 5);
-				if (decisao3) {
+				boolean decisaoOlfato3 =
+								olfato3 > olfato2
+								&& olfato3 > olfato1
+								&& olfato3 > olfato4
+								&& olfato3 > olfato5
+								&& olfato3 > olfato6
+								&& olfato3 > olfato7;
+				if (decisao3 || decisaoOlfato3) {
 					return 3;
 				}
 				return 2;
@@ -232,7 +290,14 @@ public class Ladrao extends ProgramaLadrao {
 				boolean decisao4 = (visao7 >  visao8) ||
 						(visaoId[11] == 1) || (visaoId[11] == 3) ||
 						(visaoId[11] == 4) || (visaoId[11] == 5);
-				if (decisao4) {
+				boolean decisaoOlfato4 =
+						olfato4 > olfato2
+								&& olfato4 > olfato3
+								&& olfato4 > olfato1
+								&& olfato4 > olfato5
+								&& olfato4 > olfato6
+								&& olfato4 > olfato7;
+				if (decisao4 || decisaoOlfato4) {
 					return 2;
 				}
 				return 4;
