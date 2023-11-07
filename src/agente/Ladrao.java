@@ -20,7 +20,7 @@ public class Ladrao extends ProgramaLadrao {
 		* */
 		switch (codigo) {
 			case -2:
-				return -50;
+				return -100;
 			case -1:
 				return -100;
 			case 0:
@@ -29,8 +29,10 @@ public class Ladrao extends ProgramaLadrao {
 				return 0;
 			case 3:
 				return 40;
-			case 4, 5:
-				return -30;
+			case 4:
+				return -100;
+			case 5:
+				return -100;
 			case 100, 110:
 				return 100;
 			case 200:
@@ -44,15 +46,15 @@ public class Ladrao extends ProgramaLadrao {
 		case 0:
 			return 0;
 		case 1:
-			return 35;
+			return 99;
 		case 2:
-			return 34;
+			return 77;
 		case 3:
-			return 33;
+			return 55;
 		case 4:
-			return 32;
+			return 33;
 		case 5:
-			return 31;
+			return 11;
 		}
 	return 0;
 	}
