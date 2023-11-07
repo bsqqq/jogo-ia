@@ -29,14 +29,12 @@ public class Ladrao extends ProgramaLadrao {
 				return 0;
 			case 3:
 				return 40;
-			case 4:
-				return -20;
-			case 5:
+			case 4, 5:
 				return -30;
 			case 100, 110:
 				return 100;
 			case 200:
-				return 90;
+				return 70;
 		}
 		return 0;
 	}
@@ -326,7 +324,7 @@ public class Ladrao extends ProgramaLadrao {
 			return mover();
 		}
 		else {
-			return (int)((Math.random() * 100) % 4) + 1;
+			return (int)(Math.random() * 100) % 5;
 		}
 //	return mover();
 	}
